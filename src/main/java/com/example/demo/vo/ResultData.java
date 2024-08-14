@@ -3,6 +3,7 @@ package com.example.demo.vo;
 import lombok.Getter;
 
 public class ResultData<DT> {
+
 	@Getter
 	private String ResultCode;
 	@Getter
@@ -33,6 +34,7 @@ public class ResultData<DT> {
 	public boolean isFail() {
 		return isSuccess() == false;
 	}
+
 	public static <DT> ResultData<DT> newData(ResultData rd, String dataName, DT newData) {
 		return from(rd.getResultCode(), rd.getMsg(), dataName, newData);
 	}
