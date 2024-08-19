@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +19,7 @@ public class Member {
 	private String nickname;
 	private String cellphoneNum;
 	private String email;
+	private boolean delStatus;
+	private String delDate;
 
 }
