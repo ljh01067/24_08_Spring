@@ -56,14 +56,39 @@ public interface ArticleRepository {
 	public Article getArticleById(int id);
 
 	@Select("""
-			SELECT A.* , M.nickname AS extra__writer
-			FROM article AS A
-			INNER JOIN `member` AS M
-			ON A.memberId = M.id
-			WHERE A.boardId = #{boardId}
-			ORDER BY A.id DESC
+			<script>
+				SELECT A.* , M.nickname AS extra__writer
+				FROM article AS A
+				INNER JOIN `member` AS M
+				ON A.memberId = M.id
+				WHERE 1
+				<if test="boardId != 0">
+					AND boardId = #{boardId}
+				</if>
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchKeywordTypeCode == 'title'">
+							AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordTypeCode == 'body'">
+							AND A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordTypeCode == 'writer'">
+							AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<otherwise>
+							AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+						</otherwise>
+					</choose>
+				</if>
+				ORDER BY A.id DESC
+				<if test="limitFrom >= 0">
+					LIMIT #{limitFrom}, #{limitTake}
+				</if>
+				</script>
 			""")
-	public List<Article> getForPrintArticles(int boardId);
+	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake, String searchKeywordTypeCode, String searchKeyword);
 
 	@Select("""
 			SELECT A.* , M.nickname AS extra__writer
@@ -76,5 +101,44 @@ public interface ArticleRepository {
 
 	@Select("SELECT LAST_INSERT_ID();")
 	public int getLastInsertId();
+
+	@Select("""
+			<script>
+				SELECT COUNT(*), A.*, M.nickname AS extra__writer
+				FROM article AS A
+				INNER JOIN `member` AS M
+				ON A.memberId = M.id
+				WHERE 1
+				<if test="boardId != 0">
+					AND A.boardId = #{boardId}
+				</if>
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchKeywordTypeCode == 'title'">
+							AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordTypeCode == 'body'">
+							AND A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordTypeCode == 'writer'">
+							AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<otherwise>
+							AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+						</otherwise>
+					</choose>
+				</if>
+				ORDER BY A.id DESC;
+			</script>
+			""")
+	public int getArticleCount(int boardId, String searchKeywordTypeCode, String searchKeyword);
+
+	@Update("""
+			UPDATE article
+			SET hitCount = hitCount + 1
+			WHERE id = #{id}
+			""")
+	public void increaseHitCount(int id);
 
 }
