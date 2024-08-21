@@ -1,8 +1,8 @@
-2024-08-21 09:30:55 [ERROR] jdbc.sqltiming -  com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
-1. UPDATE article
+2024-08-20 16:44:26 [ERROR] jdbc.sqltiming -  com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+161. UPDATE article
 SET hitCount = hitCount + 1
 WHERE id = 21
- {FAILED after 19 msec}
+ {FAILED after 20 msec}
 java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -14,7 +14,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
-	at jdk.proxy4/jdk.proxy4.$Proxy82.execute(Unknown Source)
+	at jdk.proxy5/jdk.proxy5.$Proxy85.execute(Unknown Source)
 	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:48)
 	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:75)
 	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
@@ -29,7 +29,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:67)
 	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141)
 	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86)
-	at jdk.proxy3/jdk.proxy3.$Proxy70.increaseHitCount(Unknown Source)
+	at jdk.proxy22/jdk.proxy22.$Proxy135.increaseHitCount(Unknown Source)
 	at com.example.demo.service.ArticleService.increaseHitCount(ArticleService.java:100)
 	at com.example.demo.controller.UsrArticleController.showDetail(UsrArticleController.java:40)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -80,7 +80,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2024-08-21 09:30:55 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+2024-08-20 16:44:26 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
 ### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 ### The error may exist in com/example/demo/repository/ArticleRepository.java (best guess)
 ### The error may involve com.example.demo.repository.ArticleRepository.increaseHitCount-Inline
@@ -99,7 +99,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
-	at jdk.proxy4/jdk.proxy4.$Proxy82.execute(Unknown Source)
+	at jdk.proxy5/jdk.proxy5.$Proxy85.execute(Unknown Source)
 	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:48)
 	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:75)
 	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
@@ -114,7 +114,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:67)
 	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141)
 	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86)
-	at jdk.proxy3/jdk.proxy3.$Proxy70.increaseHitCount(Unknown Source)
+	at jdk.proxy22/jdk.proxy22.$Proxy135.increaseHitCount(Unknown Source)
 	at com.example.demo.service.ArticleService.increaseHitCount(ArticleService.java:100)
 	at com.example.demo.controller.UsrArticleController.showDetail(UsrArticleController.java:40)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -165,11 +165,11 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2024-08-21 09:30:58 [ERROR] jdbc.sqltiming -  com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
-1. UPDATE article
+2024-08-20 16:44:29 [ERROR] jdbc.sqltiming -  com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+161. UPDATE article
 SET hitCount = hitCount + 1
 WHERE id = 21
- {FAILED after 1 msec}
+ {FAILED after 0 msec}
 java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -181,7 +181,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
-	at jdk.proxy4/jdk.proxy4.$Proxy82.execute(Unknown Source)
+	at jdk.proxy5/jdk.proxy5.$Proxy85.execute(Unknown Source)
 	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:48)
 	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:75)
 	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
@@ -196,7 +196,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:67)
 	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141)
 	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86)
-	at jdk.proxy3/jdk.proxy3.$Proxy70.increaseHitCount(Unknown Source)
+	at jdk.proxy22/jdk.proxy22.$Proxy135.increaseHitCount(Unknown Source)
 	at com.example.demo.service.ArticleService.increaseHitCount(ArticleService.java:100)
 	at com.example.demo.controller.UsrArticleController.showDetail(UsrArticleController.java:40)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -247,7 +247,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2024-08-21 09:30:58 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+2024-08-20 16:44:29 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
 ### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 ### The error may exist in com/example/demo/repository/ArticleRepository.java (best guess)
 ### The error may involve com.example.demo.repository.ArticleRepository.increaseHitCount-Inline
@@ -266,7 +266,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
-	at jdk.proxy4/jdk.proxy4.$Proxy82.execute(Unknown Source)
+	at jdk.proxy5/jdk.proxy5.$Proxy85.execute(Unknown Source)
 	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:48)
 	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:75)
 	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
@@ -281,7 +281,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'hitCount' in 'field list'
 	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:67)
 	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141)
 	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86)
-	at jdk.proxy3/jdk.proxy3.$Proxy70.increaseHitCount(Unknown Source)
+	at jdk.proxy22/jdk.proxy22.$Proxy135.increaseHitCount(Unknown Source)
 	at com.example.demo.service.ArticleService.increaseHitCount(ArticleService.java:100)
 	at com.example.demo.controller.UsrArticleController.showDetail(UsrArticleController.java:40)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
