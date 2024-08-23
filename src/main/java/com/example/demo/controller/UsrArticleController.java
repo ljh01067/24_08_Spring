@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.ReactionPointService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
@@ -32,6 +33,9 @@ public class UsrArticleController {
 	@Autowired
 	private BoardService boardService;
 
+	@Autowired
+	private ReactionPointService reactionPointService;
+
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
 
@@ -39,7 +43,12 @@ public class UsrArticleController {
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
+		// -1 싫어요 , 0 표현 x, 1 좋아요
+		int userCanReaction = reactionPointService.userCanReaction(rq.getLoginedMemberId(), "article", id);
+		System.err.println(userCanReaction);
+
 		model.addAttribute("article", article);
+		model.addAttribute("userCanReaction", userCanReaction);
 
 		return "usr/article/detail";
 	}
@@ -54,7 +63,11 @@ public class UsrArticleController {
 			return increaseHitCountRd;
 		}
 
-		return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
+		ResultData rd = ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
+
+		rd.setData2("조회수가 증가된 게시글의 id", id);
+
+		return rd;
 	}
 
 	@RequestMapping("/usr/article/modify")

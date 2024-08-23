@@ -61,6 +61,20 @@
 					<td style="text-align: center;">${article.extra__writer}</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">Like</th>
+					<td style="text-align: center;">${article.goodReactionPoint}</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;">Dislike</th>
+					<td style="text-align: center;">${article.badReactionPoint}</td>
+				</tr>
+				<tr>
+				<th style="text-align: center;">LIKE / Dislike</th>
+				<td style="text-align: center;">
+				<a href="/usr/reactionPoint/doGoodReation" class="btn btn-outline btn-success">LIKE👍 ${article.goodReactionPoint}</a>
+				<a href="/usr/reactionPoint/doBadReation" class="btn btn-outline btn-error">DISLIKE👎 ${article.badReactionPoint}</a>
+				</tr>
+				<tr>
 					<th style="text-align: center;">Views</th>
 
 					<td style="text-align: center;">
