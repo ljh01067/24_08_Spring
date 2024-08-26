@@ -40,7 +40,7 @@ public interface ArticleRepository {
 	public void modifyArticle(int id, String title, String body);
 
 	@Select("""
-			SELECT A.* , M.nickname AS extra__writer
+			SELECT A.*, M.nickname AS extra__writer
 			FROM article AS A
 			INNER JOIN `member` AS M
 			ON A.memberId = M.id
@@ -57,12 +57,10 @@ public interface ArticleRepository {
 
 	@Select("""
 			<script>
-			SELECT A.* , M.nickname AS extra__writer
+				SELECT A.*, M.nickname AS extra__writer
 				FROM article AS A
 				INNER JOIN `member` AS M
 				ON A.memberId = M.id
-				LEFT JOIN `reactionPoint` AS RP
-			    ON A.id = RP.relId AND RP.relTypeCode = 'article'
 				WHERE 1
 				<if test="boardId != 0">
 					AND boardId = #{boardId}
@@ -146,10 +144,51 @@ public interface ArticleRepository {
 
 	@Update("""
 			UPDATE article
+			SET goodReactionPoint = goodReactionPoint + 1
+			WHERE id = #{relId}
+			""")
+	public int increaseGoodReactionPoint(int relId);
+
+	@Update("""
+			UPDATE article
+			SET goodReactionPoint = goodReactionPoint - 1
+			WHERE id = #{relId}
+			""")
+	public int decreaseGoodReactionPoint(int relId);
+
+	@Update("""
+			UPDATE article
+			SET badReactionPoint = badReactionPoint + 1
+			WHERE id = #{relId}
+			""")
+	public int increaseBadReactionPoint(int relId);
+
+	@Update("""
+			UPDATE article
+			SET badReactionPoint = badReactionPoint - 1
+			WHERE id = #{relId}
+			""")
+	public int decreaseBadReactionPoint(int relId);
+
+	@Update("""
+			UPDATE article
 			SET hitCount = hitCount + 1
 			WHERE id = #{id}
 			""")
 	public int increaseHitCount(int id);
 
-}
+	@Select("""
+			SELECT goodReactionPoint
+			FROM article
+			WHERE id = #{relId}
+			""")
+	public int getGoodRP(int relId);
 
+	@Select("""
+			SELECT badReactionPoint
+			FROM article
+			WHERE id = #{relId}
+			""")
+	public int getBadRP(int relId);
+
+}
