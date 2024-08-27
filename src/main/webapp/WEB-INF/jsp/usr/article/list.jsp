@@ -3,6 +3,12 @@
 <c:set var="pageTitle" value="${board.code } LIST"></c:set>
 <%@ include file="../common/head.jspf"%>
 <hr />
+<script>
+const reply = '${replies}'
+const replysplit = reply.split(')')
+console.log(replysplit.length-1);
+console.log(repliesCount);
+</script>
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
@@ -53,7 +59,7 @@
 					<tr class="hover">
 						<td style="text-align: center;">${article.id}</td>
 						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
-						<td style="text-align: center;"><a class="hover:underline" href="detail?id=${article.id}">${article.title}</a></td>
+						<td style="text-align: center;"><a class="hover:underline" href="detail?id=${article.id}">${article.title}[1]</a></td>
 						<td style="text-align: center;">${article.extra__writer}</td>
 						<td style="text-align: center;">${article.goodReactionPoint}</td>
 						<td style="text-align: center;">${article.badReactionPoint}</td>
