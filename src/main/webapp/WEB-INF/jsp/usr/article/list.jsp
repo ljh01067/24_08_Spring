@@ -59,7 +59,13 @@ console.log(repliesCount);
 					<tr class="hover">
 						<td style="text-align: center;">${article.id}</td>
 						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
-						<td style="text-align: center;"><a class="hover:underline" href="detail?id=${article.id}">${article.title}[1]</a></td>
+						<td style="text-align: center;">
+							<a class="hover:underline" href="detail?id=${article.id}">${article.title} <c:if
+									test="${article.extra__repliesCount > 0 }">
+									<span style="color: red;">[${article.extra__repliesCount }]</span>
+								</c:if>
+							</a>
+						</td>
 						<td style="text-align: center;">${article.extra__writer}</td>
 						<td style="text-align: center;">${article.goodReactionPoint}</td>
 						<td style="text-align: center;">${article.badReactionPoint}</td>
