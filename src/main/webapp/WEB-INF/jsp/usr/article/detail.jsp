@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="DETAIL"></c:set>
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 <hr />
 
 <!-- <iframe src="http://localhost:8080/usr/article/doIncreaseHitCount?id=757" frameborder="0"></iframe> -->
@@ -10,13 +11,10 @@
 	const params = {};
 	params.id = parseInt('${param.id}');
 	params.memberId = parseInt('${loginedMemberId}')
-	const reply = '${replies}'
-	const replysplit = reply.split(')')
 	
 	console.log(params);
 	console.log(params.id);
 	console.log(params.memberId);
-	console.log(replysplit.length-1);
 
 	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
 	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
@@ -186,7 +184,50 @@ function doBadReaction(articleId) {
 		checkRP();
 	});
 </script>
+<!-- 댓글 수정 -->
+<script>
+function toggleModifybtn(replyId) {
+	
+	console.log(replyId);
+	
+	$('#modify-btn-'+replyId).hide();
+	$('#save-btn-'+replyId).show();
+	$('#reply-'+replyId).hide();
+	$('#modify-form-'+replyId).show();
+}
 
+function doModifyReply(replyId) {
+	 console.log(replyId); // 디버깅을 위해 replyId를 콘솔에 출력
+	    
+	    // form 요소를 정확하게 선택
+	    var form = $('#modify-form-' + replyId);
+	    console.log(form); // 디버깅을 위해 form을 콘솔에 출력
+
+	    // form 내의 input 요소의 값을 가져옵니다
+	    var text = form.find('input[name="reply-text-' + replyId + '"]').val();
+	    console.log(text); // 디버깅을 위해 text를 콘솔에 출력
+
+	    // form의 action 속성 값을 가져옵니다
+	    var action = form.attr('action');
+	    console.log(action); // 디버깅을 위해 action을 콘솔에 출력
+	
+    $.post({
+    	url: '/usr/reply/doModify', // 수정된 URL
+        type: 'POST', // GET에서 POST로 변경
+        data: { id: replyId, body: text }, // 서버에 전송할 데이터
+        success: function(data) {
+        	$('#modify-form-'+replyId).hide();
+        	$('#reply-'+replyId).text(data);
+        	$('#reply-'+replyId).show();
+        	$('#save-btn-'+replyId).hide();
+        	$('#modify-btn-'+replyId).show();
+        },
+        error: function(xhr, status, error) {
+            alert('댓글 수정에 실패했습니다: ' + error);
+        }
+	})
+}
+</script>
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
@@ -251,8 +292,21 @@ function doBadReaction(articleId) {
 					<td style="text-align: center;">${article.title}</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">Attached Image</th>
+					<td style="text-align: center;">
+						<div style="text-align: center;">
+							<img class="mx-auto rounded-xl" src="${rq.getImgUri(article.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+						</div>
+						<div>${rq.getImgUri(article.id)}</div>
+					</td>
+				</tr>
+				<tr>
 					<th style="text-align: center;">Body</th>
-					<td style="text-align: center;">${article.body}</td>
+					<td>
+						<div class="toast-ui-viewer">
+							<script type="text/x-template">${article.body}</script>
+						</div>
+					</td>
 				</tr>
 
 			</tbody>
@@ -285,46 +339,7 @@ function doBadReaction(articleId) {
 		form.submit();
 	}
 </script>
-<script>
-function toggleModifybtn(replyId) {
-	
-	console.log(replyId);
-	
-	$('#modify-btn-'+replyId).hide();
-	$('#save-btn-'+replyId).show();
-	$('#reply-'+replyId).hide();
-	$('#modify-form-'+replyId).show();
-}
-function doModifyReply(replyId) {
-	 console.log(replyId); // 디버깅을 위해 replyId를 콘솔에 출력
-	    
-	    // form 요소를 정확하게 선택
-	    var form = $('#modify-form-' + replyId);
-	    console.log(form); // 디버깅을 위해 form을 콘솔에 출력
-	    // form 내의 input 요소의 값을 가져옵니다
-	    var text = form.find('input[name="reply-text-' + replyId + '"]').val();
-	    console.log(text); // 디버깅을 위해 text를 콘솔에 출력
-	    // form의 action 속성 값을 가져옵니다
-	    var action = form.attr('action');
-	    console.log(action); // 디버깅을 위해 action을 콘솔에 출력
-	
-    $.post({
-    	url: '/usr/reply/doModify', // 수정된 URL
-        type: 'POST', // GET에서 POST로 변경
-        data: { id: replyId, body: text }, // 서버에 전송할 데이터
-        success: function(data) {
-        	$('#modify-form-'+replyId).hide();
-        	$('#reply-'+replyId).text(data);
-        	$('#reply-'+replyId).show();
-        	$('#save-btn-'+replyId).hide();
-        	$('#modify-btn-'+replyId).show();
-        },
-        error: function(xhr, status, error) {
-            alert('댓글 수정에 실패했습니다: ' + error);
-        }
-	})
-}
-</script>
+
 <!-- 댓글 -->
 <section class="mt-24 text-xl px-4">
 	<c:if test="${rq.isLogined() }">
@@ -355,7 +370,7 @@ function doModifyReply(replyId) {
 	</c:if>
 
 	<c:if test="${!rq.isLogined() }">
-		댓글 작성을 위해 <a class="btn btn-outline btn-primary" href="../member/login">로그인</a>이 필요합니다
+		댓글 작성을 위해 <a class="btn btn-outline btn-primary" href="${rq.loginUri }">로그인</a>이 필요합니다
 	</c:if>
 	<!-- 	댓글 리스트 -->
 	<div class="mx-auto">
@@ -384,10 +399,10 @@ function doModifyReply(replyId) {
 						</td>
 						<td style="text-align: center;">${reply.goodReactionPoint}</td>
 						<td style="text-align: center;">${reply.badReactionPoint}</td>
-						
 						<td style="text-align: center;">
 							<c:if test="${reply.userCanModify }">
-							<button onclick="toggleModifybtn('${reply.id}');" id="modify-btn-${reply.id }" style="white-space: nowrap;"
+								<%-- 								<a class="btn btn-outline btn-xs btn-success" href="../reply/modify?id=${reply.id }">수정</a> --%>
+								<button onclick="toggleModifybtn('${reply.id}');" id="modify-btn-${reply.id }" style="white-space: nowrap;"
 									class="btn btn-outline btn-xs btn-success">수정</button>
 								<button onclick="doModifyReply('${reply.id}');" style="white-space: nowrap; display: none;"
 									id="save-btn-${reply.id }" class="btn btn-outline btn-xs">저장</button>

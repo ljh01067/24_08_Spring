@@ -67,6 +67,11 @@ public class ArticleService {
 		return articleRepository.getArticles();
 	}
 
+	public int getCurrentArticleId() {
+		return articleRepository.getCurrentArticleId();
+
+	}
+
 	private void controlForPrintData(int loginedMemberId, Article article) {
 		if (article == null) {
 			return;
@@ -150,7 +155,7 @@ public class ArticleService {
 	public Object getArticleHitCount(int id) {
 		return articleRepository.getArticleHitCount(id);
 	}
-	
+
 	public int getGoodRP(int relId) {
 		return articleRepository.getGoodRP(relId);
 	}

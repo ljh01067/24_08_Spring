@@ -2,30 +2,35 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="MODIFY"></c:set>
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 <hr />
 
 <script type="text/javascript">
-	function MemberModify__submit(form) {
-		form.loginPw.value = form.loginPw.value.trim();
-		if (form.loginPw.value.length > 0) {
-			form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-			if (form.loginPwConfirm.value == 0) {
-				alert('비번 확인 써');
-				return;
-			}
-			if (form.loginPwConfirm.value != form.loginPw.value) {
-				alert('비번 불일치');
-				return;
-			}
+	function ArticleModify__submit(form) {
+
+		form.title.value = form.title.value.trim();
+		if (form.title.value.length == 0) {
+			alert('제목을 입력해주세요');
+			return;
 		}
+		const editor = $(form).find('.toast-ui-editor').data(
+				'data-toast-editor');
+		const markdown = editor.getMarkdown().trim();
+		if (markdown.length == 0) {
+			alert('내용 써');
+			editor.focus();
+			return;
+		}
+		form.body.value = markdown;
+
 		form.submit();
 	}
 </script>
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
-		<form onsubmit="MemberModify__submit(this); return false;" action="../member/doModify" method="POST">
-			<input type="hidden" name="id" value="${article.id}" />
+		<form onsubmit="ArticleModify__submit(this); return false;" action=" ../article/doModify" method="POST">
+			<input type="hidden" name="id" value="${article.id}" /> <input type="hidden" name="body">
 			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 				<tbody>
 					<tr>
@@ -46,13 +51,21 @@
 					</tr>
 					<tr>
 						<th style="text-align: center;">Title</th>
-						<td style="text-align: center;"><input name="title" value="${article.title}" type="text" autocomplete="off"
-							placeholder="새 제목을 입력해" class="input input-bordered input-primary w-full max-w-xs input-sm " /></td>
+						<td style="text-align: center;">
+							<input name="title" value="${article.title}" type="text" autocomplete="off" placeholder="새 제목을 입력해"
+								class="input input-bordered input-primary w-full max-w-xs input-sm " />
+						</td>
 					</tr>
 					<tr>
 						<th style="text-align: center;">Body</th>
-						<td style="text-align: center;"><input name="body" value="${article.body}" type="text" autocomplete="off"
-							placeholder="새 내용을 입력해" class="input input-bordered input-primary w-full max-w-xs input-sm " /></td>
+						<td style="text-align: center;">
+							<%-- 							<input name="body" value="${article.body}" type="text" autocomplete="off" placeholder="새 내용을 입력해" --%>
+							<!-- 								class="input input-bordered input-primary w-full max-w-xs input-sm " /> -->
+							<div class="toast-ui-editor">
+								<script type="text/x-template">${article.body }
+      </script>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<th></th>
