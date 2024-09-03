@@ -27,6 +27,13 @@
 						<td style="text-align: center;"><button class="btn btn-primary">로그인</button></td>
 
 					</tr>
+					<tr>
+						<th></th>
+						<td style="text-align: center;">
+							<a class="btn btn-outline btn-primary" href="${rq.findLoginIdUri }">아이디 찾기</a>
+							<a class="btn btn-outline btn-success" href="${rq.findLoginPwUri }">비밀번호찾기</a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</form>
